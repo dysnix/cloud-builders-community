@@ -1,14 +1,14 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/helm:${_HELM_VERSION}', '--tag=gcr.io/$PROJECT_ID/helm:latest', '--build-arg', 'HELM_VERSION=v${_HELM_VERSION}', '.']
+  args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/helm:${_HELM_VERSION}', '--tag=eu.gcr.io/$PROJECT_ID/helm:latest', '--build-arg', 'HELM_VERSION=v${_HELM_VERSION}', '.']
 # Sanity Check: make sure basic functionality works
-- name: 'gcr.io/$PROJECT_ID/helm:latest'
-  args: ['version', '--client']
+- name: 'eu.gcr.io/$PROJECT_ID/helm:latest'
+  args: ['plugin', 'install', 'https://github.com/futuresimple/helm-secrets']
   env:
     - SKIP_CLUSTER_CONFIG=true
 images:
-  - 'gcr.io/$PROJECT_ID/helm:${_HELM_VERSION}'
-  - 'gcr.io/$PROJECT_ID/helm:latest'
+  - 'eu.gcr.io/$PROJECT_ID/helm:${_HELM_VERSION}'
+  - 'eu.gcr.io/$PROJECT_ID/helm:latest'
 tags: ['cloud-builders-community']
 substitutions:
   _HELM_VERSION: 2.16.1
